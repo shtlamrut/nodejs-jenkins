@@ -1,11 +1,12 @@
 node {
      def app 
-     stage('clone repository') {
-      checkout scm  
-    }
      stage('Initialize'){
         def dockerHome = tool 'docker'
-        env.PATH = "${dockerHome}/bin:${env.PATH}"
+        def nodeHome = tool 'node'
+          env.PATH = "${dockerHome}/bin:${nodeHome}/bin:${env.PATH}"
+    }
+     stage('clone repository') {
+      checkout scm  
     }
      stage('Build docker Image'){
       app = docker.build("shtlamrut/dockerdemo")
